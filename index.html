@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pifagor Trade | NUPL Storytelling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --neon: #00FF41;
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --panel-bg: rgba(20, 20, 20, 0.8);
+        }
+        body {
+            margin: 0; padding: 0; background-color: var(--bg); color: var(--text-main);
+            font-family: 'Inter', sans-serif; overflow: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(0, 255, 65, 0.04) 0%, transparent 50%),
+                              radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+        }
+
+        .slide {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 5%; box-sizing: border-box;
+            opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none; overflow-y: auto;
+        }
+        .slide.active { opacity: 1; transform: translateY(0); pointer-events: auto; z-index: 10; }
+
+        .logo-top {
+            position: absolute; top: 30px; left: 40px; font-family: 'Montserrat', sans-serif;
+            font-weight: 900; font-size: 1.2rem; color: transparent; -webkit-text-stroke: 1px var(--neon);
+            letter-spacing: 2px; display: flex; align-items: center; gap: 10px; z-index: 50;
+        }
+        .logo-top span { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--text-main); -webkit-text-stroke: 0; }
+
+        .page-indicator {
+            position: absolute; bottom: 40px; right: 180px; font-family: 'Montserrat', sans-serif;
+            font-size: 1rem; color: var(--text-muted); letter-spacing: 2px; z-index: 100;
+        }
+        .page-indicator span.current { color: var(--neon); font-weight: 700; }
+
+        /* Стили для Сторителлинга */
+        .big-quote {
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 900;
+            color: transparent; -webkit-text-stroke: 1.5px var(--text-main); text-transform: uppercase;
+            text-align: center; line-height: 1.1; margin-bottom: 20px; max-width: 900px;
+        }
+        .big-quote.neon { -webkit-text-stroke: 1.5px var(--neon); }
+        
+        .big-number {
+            font-family: 'Montserrat', sans-serif; font-size: 7rem; font-weight: 900;
+            color: var(--neon); text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            line-height: 1; margin-bottom: 10px;
+        }
+        .big-number span { font-size: 3rem; }
+
+        .explanation {
+            font-family: 'Inter', sans-serif; font-size: 1.2rem; color: #d1d1d1;
+            text-align: center; max-width: 700px; line-height: 1.6; margin-bottom: 30px;
+        }
+
+        .img-container {
+            width: 100%; max-width: 800px; background: var(--panel-bg);
+            border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .img-container img { width: 100%; height: auto; border-radius: 8px; display: block; }
+
+        .nav-controls { position: fixed; bottom: 30px; right: 40px; display: flex; gap: 15px; z-index: 100; }
+        button {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main);
+            padding: 10px 20px; border-radius: 5px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        button:hover { border-color: var(--neon); color: var(--neon); }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--neon); transition: width 0.3s ease; z-index: 100; box-shadow: 0 0 10px var(--neon); }
+
+        @media (max-width: 768px) {
+            .slide { padding-top: 70px; padding-left: 15px; padding-right: 15px; justify-content: flex-start; }
+            .big-quote { font-size: 2rem; margin-bottom: 10px; }
+            .big-number { font-size: 4rem; }
+            .explanation { font-size: 0.95rem; }
+            .nav-controls { bottom: 15px; right: 15px; }
+            .page-indicator { bottom: 15px; left: 15px; right: auto; }
+            .logo-top { top: 15px; left: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    <div class="logo-top">PIFAGOR TRADE <span>math trade</span></div>
+
+    <!-- СЛАЙД 1 (Титул) -->
+    <div class="slide active" id="slide-1" style="text-align: center;">
+        <div class="big-quote neon">On-Chain Аналитика</div>
+        <div style="font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main);">NUPL: Нереализованный профит</div>
+        <div style="font-size: 1rem; color: #555; margin-top: 40px; letter-spacing: 2px;">07.11.2026</div>
+    </div>
+
+    <!-- СЛАЙД 2 (564 дня) -->
+    <div class="slide" id="slide-2">
+        <div class="big-quote">Снижение завершено</div>
+        <div class="big-number">564<span>дня</span></div>
+        <div class="explanation">Столько длилось падение от High (31.01.2025) до Low (18.08.2026). В рамках нормы [423 - 631]. Рынок развернулся.</div>
+        <div class="img-container"><img src="graph_down.png" alt="График снижения"></div>
+    </div>
+
+    <!-- СЛАЙД 3 (1318 дней) -->
+    <div class="slide" id="slide-3">
+        <div class="big-quote">Истинность дна</div>
+        <div class="big-number">1318<span>дней</span></div>
+        <div class="explanation">Цикл Low-Low занял 1318 дней. Запас времени был всего 23 дня. Показатель закрепился выше 0.25. Дно подтверждено.</div>
+        <div class="img-container"><img src="graph_low.png" alt="График Low-Low"></div>
+    </div>
+
+    <!-- СЛАЙД 4 (0.6) -->
+    <div class="slide" id="slide-4">
+        <div class="big-quote neon">Цель</div>
+        <div class="big-number">0.6</div>
+        <div class="explanation">Уровень 0.6 — это стадия "Веры" и кульминационная фаза роста. Показатель уже закрепился выше 0.25 и движется к цели.</div>
+        <div class="img-container"><img src="graph_model.png" alt="График Моделирования"></div>
+    </div>
+
+    <!-- СЛАЙД 5 (WE HERE) -->
+    <div class="slide" id="slide-5">
+        <div class="big-quote">Мы здесь</div>
+        <div class="explanation" style="font-size: 1.5rem; color: var(--text-main); margin-top: 20px;">Переход в стадию "Оптимизма". Восходящий тренд подтвержден.</div>
+        <div class="img-container"><img src="graph_current.png" alt="График текущей ситуации"></div>
+    </div>
+
+    <div class="page-indicator"><span class="current" id="current-page">01</span> / <span id="total-pages">05</span></div>
+    <div class="nav-controls"><button onclick="prev()">←</button><button onclick="next()">→</button></div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+        const currentPageEl = document.getElementById('current-page');
+        const totalPagesEl = document.getElementById('total-pages');
+        let currentSlide = 0;
+        totalPagesEl.innerText = String(slides.length).padStart(2, '0');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) { slide.classList.add('active'); }
+                else { slide.classList.remove('active'); }
+            });
+            progress.style.width = ((currentSlide + 1) / slides.length * 100) + '%';
+            currentPageEl.innerText = String(currentSlide + 1).padStart(2, '0');
+        }
+        function next() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); } }
+        function prev() { if (currentSlide > 0) { currentSlide--; updateSlide(); } }
+
+        // Свайпы
+        let touchStartX = 0; let touchEndX = 0;
+        document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+        document.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+        function handleSwipe() {
+            const swipeThreshold = 100; 
+            if (touchEndX < touchStartX - swipeThreshold) next();
+            if (touchEndX > touchStartX + swipeThreshold) prev();
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+        updateSlide();
+    </script>
+</body>
+</html>
